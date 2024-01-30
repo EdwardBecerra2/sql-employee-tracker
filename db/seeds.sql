@@ -20,15 +20,15 @@ VALUES  ("Engineering Manager", 120000, 1),
         ("Lawyer", 95000, 5);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES  ("dale", "doeback",  1, NULL),
-        ("sebas", "coldren",  2, 1), 
-        ("erik", "espitia",  3, 1), 
-        ("matt", "alaverado",  4, NULL), 
-        ("ozzy", "rifas",  5, 4),
-        ("danny", "escalante",  6, NULL), 
-        ("paul", "walker",  7, 6), 
-        ("dom", "toretto",  8, 6), 
-        ("andrew", "bill",  9, NULL), 
-        ("pat", "morales",  10, 9), 
-        ("tiffany", "martinez",  11, NULL), 
-        ("jack", "black",  12, 11);
+VALUES  ("Roxy", "Say",  1, NULL),
+        ("Jane", "Doe",  2, 1),
+        ("Janet", "Doe",  3, 1), 
+        ("Jennifer", "Doe",  4, NULL), 
+        ("Julia", "Doe",  5, 4),
+        ("Jaya", "Dave",  6, NULL), 
+        ("Janki", "Dave",  7, 6), 
+        ("Juhi", "Dave",  8, 6), 
+        ("Jin", "Dai",  9, NULL), 
+        ("Jooeun", "Dai",  10, 9), 
+        ("Jocelyn", "Davalos",  11, NULL), 
+        ("Jaylia", "Davalos",  12, 11);

@@ -18,12 +18,10 @@
   
   [![Generic badge](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/.)
   
-   
-  
-  
-
   ## Installation 
-  1. Branch this repo 2. run npm i to install all dependencies 3. invoke app with node index.js
+  1. Branch this repo 
+  2. run npm i to install all dependencies 
+  3. invoke app with node index.js
 
   ## Usage 
   Use node index.js in terminal to invoke app 
@@ -32,6 +30,7 @@
   For any user input please email edwardbecerra1207@gmail.com
 
   ## Testing
+  watch a [video](<https://www.redcoolmedia.net/videoonlineconverter/videos/1706576908_Screen%20Recording%202024-01-29%20at%205.03.30%E2%80%AFPM.mp4>)
   
 
   ## Questions
