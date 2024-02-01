@@ -21,12 +21,12 @@ async function dbConnection(select) {
 
 
     switch (select) {
-      case "View All Departments":
+      case "Show All Departments":
         returnedRowsFromDb = await db.query("SELECT * FROM department");
         console.table(returnedRowsFromDb[0]);
         break;
 
-      case "View All Roles":
+      case "Show All Roles":
         returnedRowsFromDb = await db.query(`
                 SELECT
                     role.id,
@@ -39,7 +39,7 @@ async function dbConnection(select) {
         console.table(returnedRowsFromDb[0]);
         break;
 
-      case "View All Employees":
+      case "Show All Employees":
         returnedRowsFromDb = await db.query(`
                 SELECT
                     employee.id,
@@ -214,9 +214,9 @@ function userPrompt() {
         name: "select",
         message: "What would you like to do?",
         choices: [
-          "View All Departments",
-          "View All Roles",
-          "View All Employees",
+          "Show All Departments",
+          "Show All Roles",
+          "Show All Employees",
           "Add a Department",
           "Add a Role",
           "Add an Employee",

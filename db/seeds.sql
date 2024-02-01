@@ -1,21 +1,21 @@
 INSERT INTO department (name)
 VALUES  ("Engineering"),
         ("Finance"),
-        ("Interconnected"),
-        ("Sales"),
+        ("Resturant"),
+        ("Retail"),
         ("Legal");
 
 INSERT INTO role (title, salary, department_id)
-VALUES  ("Engineering Manager", 120000, 1),
-        ("Engineering Lead", 100000, 1),
-        ("Staff Engineer", 80000, 1),
-        ("Finance Manager", 85000, 2),
+VALUES  ("Engineering Manager", 110000, 1),
+        ("Engineering Lead", 90000, 1),
+        ("Staff Engineer", 70000, 1),
+        ("Human Rescources", 73000, 2),
         ("Accountant", 70000, 2),
-        ("Brand Advocate Manager", 95000, 3),
-        ("Brand Advocate Sr. Analyst", 82000, 3),
-        ("Brand Advocate Analyst", 70000, 3),
-        ("Sales Manager", 75000, 4),
-        ("Salesperson", 65000, 4),
+        ("Floor Manager", 95000, 3),
+        ("Floor Sr. Analyst", 82000, 3),
+        ("Floor Analyst", 50000, 3),
+        ("Sales Manager", 60000, 4),
+        ("Sales Assoicate", 30000, 4),
         ("Legal Manager", 110000, 5),
         ("Lawyer", 95000, 5);
 
