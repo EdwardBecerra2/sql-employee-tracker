@@ -6,7 +6,7 @@ require("dotenv").config();
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
-// Connection from db to index.js
+// connection from db to index.js
 async function dbConnection(select) {
   try {
     const db = await mysql.createConnection({
@@ -16,32 +16,14 @@ async function dbConnection(select) {
       database: dbName,
     });
 
-    let rowsFromDb = [];
+    let inputFromDb = [];
     let outputFromInq = [];
 
-// Selector for current departments, roles, and employees
+// selector for departments, roles, and employees
 // Also for adding new departments, roles, and employees 
     switch (select) {
-      case "Show All Departments":
-        rowsFromDb = await db.query("SELECT * FROM department");
-        console.table(rowsFromDb[0]);
-        break;
-
-      case "Show All Roles":
-        rowsFromDb = await db.query(`
-                SELECT
-                    role.id,
-                    role.title,
-                    role.salary,
-                    department.name AS department
-                FROM role
-                JOIN department ON role.department_id = department.id
-                `);
-        console.table(rowsFromDb[0]);
-        break;
-
       case "Show All Employees":
-        rowsFromDb = await db.query(`
+        inputFromDb = await db.query(`
                 SELECT
                     employee.id,
                     employee.first_name,
@@ -55,7 +37,43 @@ async function dbConnection(select) {
                 JOIN department ON role.department_id = department.id
                 JOIN employee manager_table ON employee.manager_id = manager_table.id
                 `);
-        console.table(rowsFromDb[0]);
+        console.table(inputFromDb[0]);
+        break;
+
+        case "Show All Departments":
+          inputFromDb = await db.query("SELECT * FROM department");
+          console.table(inputFromDb[0]);
+          break;
+  
+        case "Show All Roles":
+          inputFromDb = await db.query(`
+                  SELECT
+                      role.id,
+                      role.title,
+                      role.salary,
+                      department.name AS department
+                  FROM role
+                  JOIN department ON role.department_id = department.id
+                  `);
+          console.table(inputFromDb[0]);
+          break;
+        
+        case "Show All Departments":
+        inputFromDb = await db.query("SELECT * FROM department");
+        console.table(inputFromDb[0]);
+        break;
+
+      case "Show All Roles":
+        inputFromDb = await db.query(`
+                SELECT
+                    role.id,
+                    role.title,
+                    role.salary,
+                    department.name AS department
+                FROM role
+                JOIN department ON role.department_id = department.id
+                `);
+        console.table(inputFromDb[0]);
         break;
 
       case "Add a Department":
@@ -67,7 +85,7 @@ async function dbConnection(select) {
         ]);
 
         try {
-          rowsFromDb = await db.query(
+          inputFromDb = await db.query(
             `INSERT INTO department (name) VALUES ('${outputFromInq.department}');`
           );
         } catch (error) {
@@ -75,47 +93,8 @@ async function dbConnection(select) {
         }
 
         break;
-
-      case "Add a Role":
-        outputFromInq = await inquirer.prompt([
-          {
-            name: "roleName",
-            message: "Enter New Role Name:",
-          },
-          {
-            name: "roleSalary",
-            message: "Enter New Role Salary:",
-          },
-          {
-            name: "roleDpt",
-            message: "Enter New Role Department:",
-          },
-        ]);
-
-        const { roleName, roleSalary, roleDepartment } = outputFromInq;
-
-        const returnDepartmentId = await db.query(
-          `SELECT IFNULL((SELECT id FROM department WHERE name = "${roleDepartment}"), "Department is None Existant")`
-        );
-
-
-        const [rows] = returnDepartmentId;
-        const department_id = Object.values(rows[0])[0];
-
-        if (department_id === "Department is None Existant") {
-          console.log("Enter a Role in an Existing Department!");
-          break;
-        }
-
-
-        rowsFromDb = await db.query(
-          ` INSERT INTO role (title, salary, department_id) VALUES ('${roleName}', '${roleSalary}', '${department_id}');`
-        );
-
-        break;
-
-
-      case "Add an Employee":
+      
+        case "Add an Employee":
         outputFromInq = await inquirer.prompt([
           {
             name: "first_name",
@@ -151,8 +130,46 @@ async function dbConnection(select) {
           return `${m.first_name} ${m.last_name}` === manager;
         });
 
-        rowsFromDb = await db.query(
+        inputFromDb = await db.query(
           `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${first_name}', '${last_name}', ${role_data[0].id}, ${manager_data[0].id})`
+        );
+
+        break;
+
+        case "Add a Role":
+        outputFromInq = await inquirer.prompt([
+          {
+            name: "roleName",
+            message: "Enter New Role Name:",
+          },
+          {
+            name: "roleSalary",
+            message: "Enter New Role Salary:",
+          },
+          {
+            name: "roleDpt",
+            message: "Enter New Role Department:",
+          },
+        ]);
+
+        const { roleName, roleSalary, roleDepartment } = outputFromInq;
+
+        const returnDepartmentId = await db.query(
+          `SELECT IFNULL((SELECT id FROM department WHERE name = "${roleDepartment}"), "Department is None Existant")`
+        );
+
+
+        const [rows] = returnDepartmentId;
+        const department_id = Object.values(rows[0])[0];
+
+        if (department_id === "Department is None Existant") {
+          console.log("Enter a Role in an Existing Department!");
+          break;
+        }
+
+
+        rowsFromDb = await db.query(
+          ` INSERT INTO role (title, salary, department_id) VALUES ('${roleName}', '${roleSalary}', '${department_id}');`
         );
 
         break;
@@ -199,14 +216,13 @@ async function dbConnection(select) {
                     UPDATE employee
                     SET role_id = ${outputFromInq.newRole}
                     WHERE employee.id = ${outputFromInq.employeeId};`);
-
-        break;
     }
   } catch (err) {
     console.log(err);
   }
 }
-// prompt for the selector 
+
+// prompt for functioning selector
 function userPrompt() {
   inquirer
     .prompt([
@@ -215,12 +231,12 @@ function userPrompt() {
         name: "select",
         message: "What would you like to do?",
         choices: [
+          "Show All Employees",
           "Show All Departments",
           "Show All Roles",
-          "Show All Employees",
           "Add a Department",
-          "Add a Role",
           "Add an Employee",
+          "Add a Role",
           "Update an Employee Role",
           new inquirer.Separator(),
           "Exit",
