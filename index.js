@@ -6,7 +6,7 @@ require("dotenv").config();
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
-
+// Connection from db to index.js
 async function dbConnection(select) {
   try {
     const db = await mysql.createConnection({
@@ -19,11 +19,12 @@ async function dbConnection(select) {
     let rowsFromDb = [];
     let outputFromInq = [];
 
-
+// Selector for current departments, roles, and employees
+// Also for adding new departments, roles, and employees 
     switch (select) {
       case "Show All Departments":
         rowsFromDb = await db.query("SELECT * FROM department");
-        console.table(RowsFromDb[0]);
+        console.table(rowsFromDb[0]);
         break;
 
       case "Show All Roles":
@@ -205,7 +206,7 @@ async function dbConnection(select) {
     console.log(err);
   }
 }
-
+// prompt for the selector 
 function userPrompt() {
   inquirer
     .prompt([
@@ -222,13 +223,13 @@ function userPrompt() {
           "Add an Employee",
           "Update an Employee Role",
           new inquirer.Separator(),
-          "Quit",
+          "Exit",
         ],
       },
     ])
     .then(async (res) => {
       await dbConnection(res.select);
-      res.select === "Quit" ? process.exit() : userPrompt();
+      res.select === "Exit" ? process.exit() : userPrompt();
     })
     .catch((err) => {
       if (error.isTtyError) {
